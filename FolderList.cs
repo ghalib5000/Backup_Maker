@@ -6,9 +6,9 @@ namespace Backup_Maker
 {
     class FolderList
     {
-       private Environment.SpecialFolder su = new Environment.SpecialFolder();
-       
-       
+     //used to get folders path location  
+      
+            
        public enum Folder
         {
             documents,
@@ -18,9 +18,8 @@ namespace Backup_Maker
             public_documents,
             Roaming,
         }
-        public object findFolder(string folderName)
+        public object findFolderPath(string folderName)
         {
-            su = 0;
             if (folderName == Folder.Local.ToString())
             {
                 return Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
