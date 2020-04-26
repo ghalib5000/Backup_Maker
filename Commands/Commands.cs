@@ -32,6 +32,8 @@ namespace Backup_Maker.Commands
 
             public ValueTask ExecuteAsync(IConsole console)
             {
+                
+
                 using(var fileManager = new FileManager())
                 {
                     fileManager.AddValue(folderlocation, foldersavelocation);
