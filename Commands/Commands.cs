@@ -13,8 +13,6 @@ namespace Backup_Maker.Commands
     [Command]
     public class Commands
     {
-        static FileManager fm = new FileManager();
-
         //TODO: backupmaker.exe --add[filename(json file)][folder location][folder save location]
         // Child of default command
         [Command("add")]
@@ -34,16 +32,18 @@ namespace Backup_Maker.Commands
 
             public ValueTask ExecuteAsync(IConsole console)
             {
-                fm.AddValue(folderlocation, foldersavelocation);
-                var fk = fm.GetValues();
-
-                Console.WriteLine("filename is: " + filename + "\n");
-                foreach (var f in fk)
+                using(var fileManager = new FileManager())
                 {
-                    Console.WriteLine("folder location is: " + f.Key + " backup locations is : " + f.Value);
-                }
+                    fileManager.AddValue(folderlocation, foldersavelocation);
 
-                return default;
+                    Console.WriteLine("filename is: " + filename + "\n");
+                    foreach (var data in fileManager.GetValues())
+                    {
+                        Console.WriteLine("folder location is: " + data.Key + " backup locations is : " + data.Value);
+                    }
+
+                    return default;
+                }
             }
         }
 
