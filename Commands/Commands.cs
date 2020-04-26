@@ -40,7 +40,6 @@ namespace Backup_Maker.Commands
                 Console.WriteLine("filename is: " + filename + "\n");
                 foreach (var f in fk)
                 {
-                    Debugger.Break();
                     Console.WriteLine("folder location is: " + f.Key + " backup locations is : " + f.Value);
                 }
 
