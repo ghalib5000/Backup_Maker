@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using CliFx;
@@ -17,13 +18,31 @@ namespace Backup_Maker
 
         private static string DataFile = Path.Combine(Path.GetTempPath(),"data.json");
 
-        public  FileManager()
+        public FileManager()
         {
-            if(File.Exists(DataFile))
+
+            if (File.Exists(DataFile))
             {
-                dict = JsonConvert.DeserializeObject<Dictionary<string,string>>(File.ReadAllText(DataFile));
+                dict = JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText(DataFile));
             }
-            else 
+            else
+                dict = new Dictionary<string, string>();
+        }
+
+        public FileManager(string location)
+        {
+            
+            string currentPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)+"\\files\\";
+            if (!Directory.Exists(currentPath))
+            {
+                Directory.CreateDirectory(currentPath);
+            }
+            DataFile = Path.Combine(currentPath +location);
+            if (File.Exists(DataFile))
+            {
+                dict = JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText(DataFile));
+            }
+            else
                 dict = new Dictionary<string, string>();
         }
 
