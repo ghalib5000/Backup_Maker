@@ -42,27 +42,8 @@ namespace Backup_Maker
             foreach (FileInfo fi in source.GetFiles())
 
             {
-                string temp = "Copying " + target.FullName + " to " + fi.Name;
-                if (File.Exists(Path.Combine(target.FullName, fi.Name)))
-                {
-                    temp = "The file "+ fi.Name+" already Exsists";
+                CopyFile(target.FullName, fi, overwrite);
 
-                    log.Information(temp);
-                    Console.WriteLine(temp);
-                }
-                else
-                {
-                    temp = "Copying " + target.FullName + " to " + fi.Name;
-                    log.Information(temp);
-                    Console.WriteLine(temp);
-
-                    fi.CopyTo(Path.Combine(target.FullName, fi.Name));
-
-                    temp = "DONE! Copied " + source + " to " + target;
-
-                    log.Information(temp);
-                    Console.WriteLine(temp);
-                }
             }
 
             // Copy each subdirectory using recursion.
@@ -97,7 +78,7 @@ namespace Backup_Maker
                 CopyAll(diSourceSubDir, nextTargetSubDir, LogFileName);
             }
         }
-        public static void Copyto(string filelocation,string fileoutputlocation,string LogFileName)
+        public static void Copyto(string filelocation,string fileoutputlocation,string LogFileName,bool overwrite)
         {
             FileInfo fn = new FileInfo(filelocation);
             if (!Directory.Exists(logloc))
@@ -112,13 +93,41 @@ namespace Backup_Maker
             string temp = "Copying " + fn.FullName + " to " + fileoutputlocation;
             log.Information(temp);
             Console.WriteLine(temp);
+            CopyFile(fileoutputlocation, fn, overwrite);
+        }
 
-            fn.CopyTo(Path.Combine(fileoutputlocation, fn.Name),true);
-
-            temp = "DONE! Copied " + fn.FullName + " to " + fileoutputlocation;
-
-            log.Information(temp);
-            Console.WriteLine(temp);
+        private static void CopyFile(string target ,FileInfo fi,bool overwrite)
+        {
+            string temp = "Copying " + fi.Name + " to " + target;
+            if (File.Exists(target+"\\"+fi.Name))
+            {
+                if (!overwrite)
+                {
+                    temp = "The file " + fi.Name + " already Exsists";
+                    log.Information(temp);
+                    Console.WriteLine(temp);
+                }
+                else
+                {
+                    temp = "Copying " + fi.Name + " to " + target;
+                    log.Information(temp);
+                    Console.WriteLine(temp);
+                    fi.CopyTo(Path.Combine(target, fi.Name), overwrite);
+                    temp = "DONE! Copied " + fi.Name + " to " + target;
+                    log.Information(temp);
+                    Console.WriteLine(temp);
+                }
+            }
+            else
+            {
+                temp = "Copying " + target + " to " + fi.Name;
+                log.Information(temp);
+                Console.WriteLine(temp);
+                fi.CopyTo(Path.Combine(target, fi.Name));
+                temp = "DONE! Copied " + fi.Name + " to " + target;
+                log.Information(temp);
+                Console.WriteLine(temp);
+            }
         }
     }
 }

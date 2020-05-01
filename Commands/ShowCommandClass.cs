@@ -25,8 +25,7 @@ namespace Backup_Maker.Commands
                 {
                     using (var fileManager = new FileManager(filename))
                     {
-
-                        Console.WriteLine("filename is: " + filename + "\n");
+                        DisplayFileName(filename);
                         foreach (var data in fileManager.GetValues())
                         {
                             Console.WriteLine("folder location is: " + data.Key + "\nbackup locations is : " + data.Value+"\n");
@@ -43,19 +42,22 @@ namespace Backup_Maker.Commands
                         using (var fileManager = new FileManager(file.Substring(filelocation.Length)))
                         {
 
-
-                            Console.WriteLine("filename is: " + file.Substring(filelocation.Length) + "\n");
+                            DisplayFileName(file.Substring(filelocation.Length));
                             foreach (var data in fileManager.GetValues())
                             {
                                 Console.WriteLine("folder location is: " + data.Key + "\nbackup locations is : " + data.Value + "\n");
                             }
-
-                            return default;
                         }
                     }
                 }
                 return default;
             }
+        }
+        private static void DisplayFileName(string filename)
+        {
+            Console.WriteLine("**************************************************************************");
+            Console.WriteLine("filename is: " + filename + "\n");
+            Console.WriteLine("**************************************************************************");
         }
 
     }

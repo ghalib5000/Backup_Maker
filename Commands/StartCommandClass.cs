@@ -3,6 +3,7 @@ using CliFx.Attributes;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,7 +12,7 @@ namespace Backup_Maker.Commands
     [Command]
     public class StartCommandClass
     {
-        //TODO: backupmaker.exe --start filename
+        //backupmaker.exe start filename
         [Command("start")]
         public class CopyCommand : ICommand
         {
@@ -31,22 +32,51 @@ namespace Backup_Maker.Commands
                         }
                         else
                         {
-                            CopyFolder.Copyto(file.Key, file.Value, "out");
+                            CopyFolder.Copyto(file.Key, file.Value, "out", overwrite);
                         }
                     }
 
-                    Console.WriteLine("filename is: " + filename + "\n");
-                    foreach (var data in fileManager.GetValues())
-                    {
-                        Console.WriteLine("folder location is: " + data.Key + " backup locations is : " + data.Value);
-                    }
-
+                    Console.WriteLine("overwrite is: "+overwrite);
                     return default;
                 }
             }
         }
 
-        //TODO: backupmaker.exe --start all
+        //backupmaker.exe startall
+        [Command("startall")]
+        public class CopyAllCommand : ICommand
+        {
+            
+            [CommandOption("overwrite", 'o', Description = "Name of the file.")]
+            public bool overwrite { get; set; }
+            public ValueTask ExecuteAsync(IConsole console)
+            {
+                DirectoryInfo currentPath = new DirectoryInfo(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\files\\");
+
+                foreach (FileInfo fi in currentPath.GetFiles())
+                {
+                    using (var fileManager = new FileManager(fi.Name))
+                    {
+                        foreach (var file in fileManager.GetValues())
+                        {
+                            if (!File.Exists(file.Key))
+                            {
+                                CopyFolder.Copy(file.Key, file.Value, "out", overwrite);
+                            }
+                            else
+                            {
+                                CopyFolder.Copyto(file.Key, file.Value, "out", overwrite);
+                            }
+                        }
+
+                        Console.WriteLine("overwrite is: " + overwrite);
+                        
+                    }
+                }
+                return default;
+            }
+        }
+
 
 
 
