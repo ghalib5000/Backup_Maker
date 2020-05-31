@@ -43,7 +43,7 @@ namespace Backup_Maker.Commands
         }
 
         //backupmaker.exe startall
-        [Command("startall")]
+        [Command("start all")]
         public class CopyAllCommand : ICommand
         {
             

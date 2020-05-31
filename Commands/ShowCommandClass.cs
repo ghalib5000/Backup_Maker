@@ -12,12 +12,12 @@ namespace Backup_Maker.Commands
     [Command]
     public class ShowCommandClass
     {
-        
+
         //Show Command
         [Command("show")]
         public class SHowCommands : ICommand
         {
-            [CommandOption("file", 'f', Description = "Name of the file.")]
+            [CommandParameter (0,Description ="Name of the file.",Name ="file")]
             public string filename { get; set; }
             public ValueTask ExecuteAsync(IConsole console)
             {
@@ -28,25 +28,35 @@ namespace Backup_Maker.Commands
                         DisplayFileName(filename);
                         foreach (var data in fileManager.GetValues())
                         {
-                            Console.WriteLine("folder location is: " + data.Key + "\nbackup locations is : " + data.Value+"\n");
+                            Console.WriteLine("folder location is: " + data.Key + "\nbackup locations is : " + data.Value + "\n");
                         }
                         return default;
                     }
                 }
                 else
                 {
-                    var filelocation = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\files\\";
-                    var files = Directory.GetFiles(filelocation);
-                    foreach (var file in files)
-                    {
-                        using (var fileManager = new FileManager(file.Substring(filelocation.Length)))
-                        {
+                    Console.WriteLine("file "+ filename+" does not exists");
+                }
+                return default;
+            }
+        }
+        [Command("show all")]
+        public class SHowAllCommands : ICommand
+        {
+            public ValueTask ExecuteAsync(IConsole console)
+            {
 
-                            DisplayFileName(file.Substring(filelocation.Length));
-                            foreach (var data in fileManager.GetValues())
-                            {
-                                Console.WriteLine("folder location is: " + data.Key + "\nbackup locations is : " + data.Value + "\n");
-                            }
+                var filelocation = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\files\\";
+                var files = Directory.GetFiles(filelocation);
+                foreach (var file in files)
+                {
+                    using (var fileManager = new FileManager(file.Substring(filelocation.Length)))
+                    {
+
+                        DisplayFileName(file.Substring(filelocation.Length));
+                        foreach (var data in fileManager.GetValues())
+                        {
+                            Console.WriteLine("folder location is: " + data.Key + "\nbackup locations is : " + data.Value + "\n");
                         }
                     }
                 }
