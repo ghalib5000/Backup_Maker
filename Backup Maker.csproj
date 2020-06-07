@@ -6,10 +6,14 @@
   <TargetFramework>netcoreapp3.1</TargetFramework>
   <RootNamespace>Backup_Maker</RootNamespace>
   <PackageId>Backup_Maker</PackageId>
-  <Version>1.0.3</Version>
+  <Version>1.0.4</Version>
   <PackAsTool>true</PackAsTool>
   <toolCommandName>backup</toolCommandName>
   <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  <Description>Insatall with dotnet tool 
+a simple backup maker that manages folders and their backup locations and can backup all folders or any specific folder of your choice with ease
+no need for manually backing up every file every time now just run this tool and you'll be good to go</Description>
+  <PackageReleaseNotes>add filename extension checker and some error handling</PackageReleaseNotes>
 
   </PropertyGroup>
 

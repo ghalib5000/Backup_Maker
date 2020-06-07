@@ -47,12 +47,26 @@ namespace Backup_Maker
 
         public void AddValue(string key,string value)
         {
-            dict.Add(key, value);
+            try
+            {
+                dict.Add(key, value);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
 
         public void Remove(string key)
         {
-            dict.Remove(key);
+            try
+            {
+                dict.Remove(key);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
 
         public void Dispose()
