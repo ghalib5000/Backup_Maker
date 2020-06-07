@@ -1,16 +1,14 @@
 ﻿using CliFx;
 using CliFx.Attributes;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Backup_Maker.Commands
 {
     [Command]
     public class AddCommandClass
-    {
+    { 
         //backupmaker.exe --add[filename(json file)][folder location][folder save location]
         // Child of default command
         [Command("add")]

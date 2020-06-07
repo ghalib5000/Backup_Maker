@@ -2,11 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using CliFx;
-using CliFx.Attributes;
-using JsonMaker;
 using Newtonsoft.Json;
 
 namespace Backup_Maker
@@ -38,12 +33,16 @@ namespace Backup_Maker
                 Directory.CreateDirectory(currentPath);
             }
             DataFile = Path.Combine(currentPath +location);
+            DataFile = CheckExtension(DataFile);
             if (File.Exists(DataFile))
             {
                 dict = JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText(DataFile));
             }
             else
+            {
+                
                 dict = new Dictionary<string, string>();
+            }
         }
 
         public void AddValue(string key,string value)
@@ -59,6 +58,7 @@ namespace Backup_Maker
         public void Dispose()
         {
             var json = JsonConvert.SerializeObject(dict);
+           
             File.WriteAllText(DataFile,json);
         }
 
@@ -67,6 +67,18 @@ namespace Backup_Maker
             return dict;
         }
 
+       
+        private static string CheckExtension(string Filename)
+        {
+            if (!Path.HasExtension(Filename))
+            {
+                return Filename + ".json";
+            }
+            else
+            {
+                return Filename;
+            }
+        }
     }
 
 }

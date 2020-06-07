@@ -1,15 +1,21 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
-    <RootNamespace>Backup_Maker</RootNamespace>
+    
+  <OutputType>Exe</OutputType>
+  <TargetFramework>netcoreapp3.1</TargetFramework>
+  <RootNamespace>Backup_Maker</RootNamespace>
+  <PackageId>Backup_Maker</PackageId>
+  <Version>1.0.3</Version>
+  <PackAsTool>true</PackAsTool>
+  <toolCommandName>backup</toolCommandName>
+  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Basic.Logger" Version="1.0.3" />
     <PackageReference Include="CliFx" Version="1.1.0" />
-    <PackageReference Include="Json_File_Maker" Version="1.8.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
 

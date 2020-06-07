@@ -1,12 +1,4 @@
-﻿using BasicLogger;
-using CliFx;
-using CliFx.Attributes;
-using JsonMaker;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using CliFx;
 using System.Threading.Tasks;
 
 namespace Backup_Maker
